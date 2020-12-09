@@ -14,9 +14,8 @@ public class PaymentService {
 	private WorkerFeingClients workerFeignClients;
 
 	public Payment instantiatePayment(Long workerId, Integer days) {
-
 		Worker worker = workerFeignClients.findById(workerId).getBody();
-
+		
 		return new Payment(worker.getName(), worker.getDailyIncome(), days);
 	}
 }
