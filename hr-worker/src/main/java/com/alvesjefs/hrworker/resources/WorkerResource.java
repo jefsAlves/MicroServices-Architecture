@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +28,9 @@ public class WorkerResource {
 	@Autowired
 	private WorkerService workerService;
 
+	@Value("${test.config}")
+	private String configs;
+
 	@GetMapping
 	public ResponseEntity<List<Worker>> findAll(Worker workers) {
 		List<Worker> worker = workerService.findAll(workers);
@@ -38,8 +42,7 @@ public class WorkerResource {
 
 		try {
 			Thread.sleep(3000L);
-		}
-		catch(InterruptedException e) {
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
@@ -47,5 +50,11 @@ public class WorkerResource {
 		Worker worker = workerService.findById(id);
 
 		return ResponseEntity.ok().body(worker);
+	}
+
+	@GetMapping(value = "/configs")
+	public ResponseEntity<Void> getConfigs() {
+		logger.info("CONFIG = " + configs);
+		return ResponseEntity.noContent().build();
 	}
 }
