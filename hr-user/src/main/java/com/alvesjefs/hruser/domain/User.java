@@ -28,10 +28,7 @@ public class User implements Serializable {
 	private String password;
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(
-	name = "TB_USER_ROLE",
-	joinColumns = @JoinColumn (name = "USER_ID"),
-	inverseJoinColumns = @JoinColumn (name = "ROLE_ID"))
+	@JoinTable(name = "TB_USER_ROLE", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
 	private Set<Role> roles = new HashSet<>();
 
 	public User() {
@@ -74,6 +71,10 @@ public class User implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
 	}
 
 	@Override
